@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\TestService;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -13,17 +14,19 @@ use app\models\ContactForm;
 class TestController extends Controller
 {
     public function actionIndex(){
-        return $this->render('index',[
-            'head'=>'Заголовок',
-            'text'=>'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid amet deleniti dicta, eaque itaque labore libero minima nemo, optio provident ratione rem rerum sint tempora vitae! Est quaerat ratione tempora.',
-            'list'=>[
-                'Lorem ipsum dolor sit amet.',
-                'Expedita natus nemo quas. Qui!',
-                'Dolorem illo nesciunt quod reprehenderit.',
-                'Distinctio in iste quibusdam totam?',
-                'Illum in provident tenetur voluptas!'
-            ]
-        ]);
+//        return $this->render('index',[
+//            'head'=>'Заголовок',
+//            'text'=>'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid amet deleniti dicta, eaque itaque labore libero minima nemo, optio provident ratione rem rerum sint tempora vitae! Est quaerat ratione tempora.',
+//            'list'=>[
+//                'Lorem ipsum dolor sit amet.',
+//                'Expedita natus nemo quas. Qui!',
+//                'Dolorem illo nesciunt quod reprehenderit.',
+//                'Distinctio in iste quibusdam totam?',
+//                'Illum in provident tenetur voluptas!'
+//            ]
+//        ]);
+
+        return $this->render('index',['head'=> Yii::$app->test->showName()]);
     }
 }
 
