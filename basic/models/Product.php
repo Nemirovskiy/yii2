@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\validators\FilterValidator;
+use yii\validators\Validator;
 
 /**
  * This is the model class for table "product".
@@ -14,6 +16,8 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
     /**
      * @inheritdoc
      */
@@ -22,15 +26,26 @@ class Product extends \yii\db\ActiveRecord
         return 'product';
     }
 
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_CREATE => ['name','price'],
+            self::SCENARIO_UPDATE => ['price'],
+            self::SCENARIO_DEFAULT => ['price']
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['name', 'price'], 'required'],
-            [['created_at'], 'safe'],
-            [['name', 'price'], 'string', 'max' => 50],
+            [['price'], 'integer', 'min' => 1, 'max' => 1000],
+            [['name'], 'filter', 'filter' => function($value){
+                return trim(strip_tags($value));
+            } ],
+            [['name'], 'string', 'max' => 20]
         ];
     }
 
