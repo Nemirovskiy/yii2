@@ -12,20 +12,20 @@ class m180416_114813_initDataUser extends Migration
      */
     public function safeUp()
     {
-        $this->db->createCommand()->batchInsert('user', ['username', 'name', 'password_hash'],
+        $this->batchInsert('user', ['username', 'name', 'password_hash'],
             [
                 ['first', 'Первый', '77777'],
                 ['second', 'Второй', '77777'],
                 ['third', 'Третий', '77777'],
                 ['last', 'Последний', '77777']
-            ])->execute();
+            ]);
     }
     /**
      * {@inheritdoc}
      */
     public function safeDown()
     {
-        $this->db->createCommand()->delete('user',"username IN ('first','second','third','last')")->execute();
+        $this->delete('user',"username IN ('first','second','third','last')");
     }
 
     /*

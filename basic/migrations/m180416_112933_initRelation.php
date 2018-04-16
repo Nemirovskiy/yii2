@@ -12,9 +12,9 @@ class m180416_112933_initRelation extends Migration
      */
     public function safeUp()
     {
-        $this->db->createCommand()->addForeignKey('fx_access_user', 'access', ['user_id'], 'user', ['id'])->execute();
-        $this->db->createCommand()->addForeignKey('fx_access_note', 'access', ['note_id'], 'note', ['id'])->execute();
-        $this->db->createCommand()->addForeignKey('fx_note_user', 'note', ['creator_id'], 'user', ['id'])->execute();
+        $this->addForeignKey('fx_access_user', 'access', ['user_id'], 'user', ['id']);
+        $this->addForeignKey('fx_access_note', 'access', ['note_id'], 'note', ['id']);
+        $this->addForeignKey('fx_note_user', 'note', ['creator_id'], 'user', ['id']);
     }
 
     /**
@@ -22,9 +22,9 @@ class m180416_112933_initRelation extends Migration
      */
     public function safeDown()
     {
-        $this->db->createCommand()->dropForeignKey('fx_access_user', 'access')->execute();
-        $this->db->createCommand()->dropForeignKey('fx_access_note', 'access')->execute();
-        $this->db->createCommand()->dropForeignKey('fx_note_user', 'note')->execute();
+        $this->dropForeignKey('fx_access_user', 'access');
+        $this->dropForeignKey('fx_access_note', 'access');
+        $this->dropForeignKey('fx_note_user', 'note');
     }
 
     /*

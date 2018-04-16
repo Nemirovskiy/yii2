@@ -13,7 +13,7 @@ class m180416_114824_initDataNote extends Migration
     public function safeUp()
     {
 
-        $this->db->createCommand()->batchInsert('note',['text','creator_id'],[
+        $this->batchInsert('note',['text','creator_id'],[
             [
                 'Идейные соображения высшего порядка, test а также новая модель организационной деятельности.',
                 2
@@ -34,7 +34,7 @@ class m180416_114824_initDataNote extends Migration
                 'Значимость этих проблем настолько очевидна, что сплоченность команды test профессионалов однозначно.',
                 4
             ]
-        ])->execute();
+        ]);
     }
 
     /**
@@ -42,7 +42,7 @@ class m180416_114824_initDataNote extends Migration
      */
     public function safeDown()
     {
-        $this->db->createCommand()->delete('note',"text LIKE '%test%'")->execute();
+        $this->delete('note',"text LIKE '%test%'");
     }
 
     /*
