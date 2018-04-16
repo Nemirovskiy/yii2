@@ -17,6 +17,7 @@ use Yii;
  */
 class Note extends \yii\db\ActiveRecord
 {
+    const RELATION_ACCESS_USER = 'creator';
     /**
      * @inheritdoc
      */
