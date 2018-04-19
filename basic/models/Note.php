@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "note".
@@ -14,10 +15,18 @@ use Yii;
  *
  * @property Access[] $accesses
  * @property User $creator
+ * @mixin \yii\behaviors\TimestampBehavior
  */
 class Note extends \yii\db\ActiveRecord
 {
     const RELATION_ACCESS_USER = 'creator';
+
+    public function behaviors(){
+        return [
+            //   \yii\behaviors\TimestampBehavior::class
+            TimestampBehavior::class
+        ];
+    }
     /**
      * @inheritdoc
      */
