@@ -7,6 +7,7 @@ use Yii;
 use app\models\Access;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -31,18 +32,25 @@ class AccessController extends Controller
     }
 
     /**
-     * Lists all Access models.
-     * @return mixed
+     * Список только своих доступов
+     *
+     * @ return mixed
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Access::find(),
-        ]);
+        $user = Access::find()->where(['=','user_id',Yii::$app->user->id]);
+        if(Yii::$app->user->isGuest){
+            throw new ForbiddenHttpException();
+        }else{
+            $dataProvider = new ActiveDataProvider([
+                'query' => Access::find()->where(['=','user_id',Yii::$app->user->id]),
+            ]);
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
     }
 
     /**
