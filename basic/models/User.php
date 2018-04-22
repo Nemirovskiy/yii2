@@ -153,17 +153,19 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->getAuthKey() === $authKey;
     }
 
-    public function validatePassword($password,$hash)
+    public function validatePassword($password)
     {
-        return \Yii::$app->security->validatePassword($password,$hash);
+        return \Yii::$app->security->validatePassword($password,$this->password_hash);
     }
 
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
+            if($this->isNewRecord){
+                $this->auth_key = \Yii::$app->security->generateRandomString();
+            }
             if (!empty($this->password)) {
                 $this->password_hash = \Yii::$app->security->generatePasswordHash($this->password);
-                $this->auth_key = \Yii::$app->security->generateRandomString();
             }
             return true;
         }

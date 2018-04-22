@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\components\TestService;
+use app\models\Product;
+use app\models\User;
 use Yii;
 use yii\db\Query;
 use yii\filters\AccessControl;
@@ -26,6 +28,9 @@ class TestController extends Controller
 //                'Illum in provident tenetur voluptas!'
 //            ]
 //        ]);
+
+        $result = Product::find()->where(['<','id',5])->all();
+        _end($result);
         return $this->renderContent('44');
     }
     public function actionInsert(){
@@ -57,6 +62,14 @@ class TestController extends Controller
                 $user['user']
             ]
         ])->execute();
+        return $this->renderContent('44');
+    }
+
+    public function actionUser()
+    {
+        $user = User::findOne(3);
+        $user->surname = '....ич';
+        $user->save();
         return $this->renderContent('44');
     }
 

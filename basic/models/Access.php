@@ -30,10 +30,10 @@ class Access extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['note_id', 'user_id'], 'required'],
-            [['note_id', 'user_id'], 'integer'],
-            [['note_id'], 'exist', 'skipOnError' => true, 'targetClass' => Note::className(), 'targetAttribute' => ['note_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'required'],
+            [['user_id'], 'integer'],
+//            [['note_id'], 'exist', 'skipOnError' => true, 'targetClass' => Note::className(), 'targetAttribute' => ['note_id' => 'id']],
+//            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -73,4 +73,13 @@ class Access extends \yii\db\ActiveRecord
     {
         return new \app\models\query\AccessQuery(get_called_class());
     }
+
+//    public function beforeSave($insert)
+//    {
+//        if (!parent::beforeSave($insert)) {
+//            return false;
+//        }
+//        $this->note_id = $this->id;
+//        return true;
+//    }
 }

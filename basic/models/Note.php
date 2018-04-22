@@ -3,7 +3,9 @@
 namespace app\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
+use yii\base\Behavior;
+//use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "note".
@@ -15,18 +17,11 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Access[] $accesses
  * @property User $creator
- * @mixin \yii\behaviors\TimestampBehavior
  */
 class Note extends \yii\db\ActiveRecord
 {
     const RELATION_ACCESS_USER = 'creator';
 
-    public function behaviors(){
-        return [
-            //   \yii\behaviors\TimestampBehavior::class
-            TimestampBehavior::class
-        ];
-    }
     /**
      * @inheritdoc
      */
@@ -41,10 +36,7 @@ class Note extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['text'], 'string'],
-            [['creator_id'], 'required'],
-            [['creator_id', 'created_at'], 'integer'],
-            [['creator_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['creator_id' => 'id']],
+            [['text'], 'string']
         ];
     }
 
@@ -56,8 +48,8 @@ class Note extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'text' => 'Text',
-            'creator_id' => 'Creator ID',
-            'created_at' => 'Created At',
+            'creator_id' => 'Создатель',
+            'created_at' => 'Создано',
         ];
     }
 
@@ -85,4 +77,5 @@ class Note extends \yii\db\ActiveRecord
     {
         return new \app\models\query\NoteQuery(get_called_class());
     }
+
 }

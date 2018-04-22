@@ -116,8 +116,8 @@ class UserController extends Controller
     public function actionTest()
     {
         $user = new User();
-        $user->name = 'Testing2';
-        $user->username = 'Testing2';
+        $user->name = 'Testing';
+        $user->username = 'Testing';
         $user->password_hash = '88888';
         $user->save();
         $note1 = new Note();

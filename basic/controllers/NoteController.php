@@ -2,15 +2,19 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use app\models\Note;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * NoteController implements the CRUD actions for Note model.
+ * @mixin \yii\behaviors\TimestampBehavior
+ * @mixin \yii\behaviors\
  */
 class NoteController extends Controller
 {
@@ -20,6 +24,15 @@ class NoteController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -36,10 +49,20 @@ class NoteController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Note::find(),
+            'query' => Note::find()->byCreator(Yii::$app->user->id),
         ]);
 
         return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionMy()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Note::find()->byCreator(Yii::$app->user->id),
+        ]);
+
+        return $this->render('my', [
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -65,6 +88,7 @@ class NoteController extends Controller
     public function actionCreate()
     {
         $model = new Note();
+        $model->creator_id = \Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

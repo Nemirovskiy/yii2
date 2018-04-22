@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models\query;
+use app\models\Note;
 
 /**
  * This is the ActiveQuery class for [[\app\models\Note]].
@@ -30,5 +31,13 @@ class NoteQuery extends \yii\db\ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+    /**
+     * @param int userId
+     * @return mixed
+     */
+    public function byCreator($userId){
+        return Note::find()->where(['creator_id' => $userId]);
     }
 }
